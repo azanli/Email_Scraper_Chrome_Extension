@@ -5,7 +5,7 @@
   "version": "1",
   "author": "Andy Li",
   "browser_action": {
-    "default_title": "Have a good day",
+    "default_title": "Email Scraper Extension",
     "default_popup": "popup.html"
   },
   "background": {
