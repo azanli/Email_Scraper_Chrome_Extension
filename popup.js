@@ -1,16 +1,19 @@
 'use strict';
 
-chrome.storage.sync.get(['ssURL'], function(result) {
-  if (result['ssURL']) {
-    document.getElementById('url-input').value = result['ssURL'];
-  }
-});
 
 const state = {
   names: true,
   logs: true,
   script: 'https://script.google.com/macros/s/AKfycbwE3ELgyoCZPLd2tg6RxQuqX8tHJ4uiytbVxGLO9U7Z8YHOGnI/exec',
+  ssURL: '',
 };
+
+chrome.storage.sync.get(['ssURL'], function(result) {
+  if (result['ssURL']) {
+    document.getElementById('url-input').value = result['ssURL'];
+    state.ssURL = result['ssURL'];
+  }
+});
 
 function toggleNames(toggle) {
   if (toggle === 'on') {
@@ -88,6 +91,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
           } else {
             document.getElementById("url-input").focus();
+            if (state.ssURL) {
+              chrome.storage.sync.set({ ssURL: '' }, function() {
+                console.log(`Removed Google Spreadsheet URL from storage.}`)
+              });
+            }
           }
         });
       });
