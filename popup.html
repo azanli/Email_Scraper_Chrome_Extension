@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Email Scraper</title>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+  </head>
+  <body id="body">
+    <div class="title-container">
+      <h1 class="title">Email Scraper</h1>
+      <h2 class="title subtitle">&nbsp for Mail Merge</h2>
+    </div>
+
+    <div class="toggle-container">
+      <p class="toggle-title">Show console logs</p>
+      <div class="toggle-buttons">
+          <button class="toggle-button" id="logs-on">on</button>
+          <button class="toggle-button" id="logs-off">off</button>
+      </div>
+    </div>
+
+    <div class="toggle-container">
+      <p class="toggle-title">Extract names</p>
+      <div class="toggle-buttons">
+        <button class="toggle-button" id="names-on">on</button>
+        <button class="toggle-button" id="names-off">off</button>
+      </div>
+    </div>
+  
+    <div class="url-container">
+      <p class="toggle-title">Google Spreadsheet URL:</p>
+      <input id="url-input" type="text" />
+    </div>
+
+    <button id="start-button">
+      <p id="start-text">Start</p>
+      <div id="start-loader"/>
+    </button>
+
+  </body>
+  <script type="text/javascript" src="./script.js"></script>
+</html>

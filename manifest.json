@@ -1,0 +1,26 @@
+{
+  "manifest_version": 2,
+  "name": "Email Scraper for Mail Merge",
+  "description": "Extract names and emails from webpages for mass email marketing using Google Spreadsheets with Mail Merge",
+  "version": "1",
+  "author": "Andy Li",
+  "browser_action": {
+    "default_title": "Have a good day",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["script.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "activeTab", 
+    "<all_urls>", 
+    "tabs",
+    "storage",
+    "http://*/",
+    "https://*/",
+    "*://*/*"
+  ],
+  "web_accessible_resources": ["dialog.js"],
+  "content_security_policy": "script-src 'self' https://script.google.com/*; object-src 'self'"
+}
