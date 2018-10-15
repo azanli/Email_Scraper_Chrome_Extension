@@ -1,7 +1,6 @@
 'use strict';
 
-chrome.storage.local.get(['ssURL'], function(result) {
-  alert(result['ssURL'])
+chrome.storage.sync.get(['ssURL'], function(result) {
   if (result['ssURL']) {
     document.getElementById('url-input').value = result['ssURL'];
   }
@@ -82,11 +81,13 @@ document.addEventListener('DOMContentLoaded', function() {
             ssURL: document.getElementById('url-input').value,
             tabId: tab.id,
           });
-          loadSpinner();
           if (document.getElementById('url-input').value) {
+            loadSpinner();
             chrome.storage.sync.set({ ssURL: document.getElementById('url-input').value }, function() {
-              alert(`saved ssurl ${document.getElementById('url-input').value}`)
+              console.log(`Google Spreadsheet URL saved as: ${document.getElementById('url-input').value}`)
             });
+          } else {
+            document.getElementById("url-input").focus();
           }
         });
       });
