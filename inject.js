@@ -11,8 +11,7 @@
     if (!ssURL) {
       return;
     }
-  
-      
+
     class Email_Scraper {
       constructor(log = false, names = true, scriptURL = '', spreadsheetURL = '') {
         this.currIndex = 0;
@@ -200,6 +199,9 @@
           } catch(e) {
             console.error(`Error submitting data to spreadsheet: ${e}`)
           }
+          setTimeout(() => {
+            chrome.runtime.sendMessage('hideSpinner');
+          }, 2000 * (this.sourceIndex - 1));
         }
       };
     
