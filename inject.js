@@ -215,12 +215,12 @@
         const url = this.scriptURL;
         xhr.open('POST', url);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        xhr.onreadystatechange = () => {
-          if (this.log) console.log(xhr.status, xhr.statusText);
-          if (this.log) console.log(xhr.responseText);
+        // xhr.onreadystatechange = () => {
+          // if (this.log) console.log(xhr.status, xhr.statusText);
+          // if (this.log) console.log(xhr.responseText);
           // this.submitDataToSpreadsheet();
-          return;
-        };
+          // return;
+        // };
         const encoded = Object.keys(data).map(function(k) {
           return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
         }).join('&');
