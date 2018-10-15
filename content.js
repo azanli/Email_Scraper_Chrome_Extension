@@ -203,6 +203,7 @@
             chrome.runtime.sendMessage('hideSpinner');
           }, 2000 * (this.sourceIndex - 1));
         }
+        chrome.runtime.sendMessage(`${Date.now() + (2000 * (this.sourceIndex - 1))}`);
       };
     
       handleSpreadsheetSubmit(data = {}) {

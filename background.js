@@ -7,12 +7,28 @@ const state = {
   ssURL: '',
 };
 
-chrome.storage.sync.get(['ssURL'], function(result) {
+chrome.storage.sync.get(['ssURL', 'spinnerExpireDate', 'tabId'], function(result) {
   if (result['ssURL']) {
     document.getElementById('url-input').value = result['ssURL'];
     state.ssURL = result['ssURL'];
   }
+  if (result['spinnerExpireDate'] && Date.now() < result['spinnerExpireDate']) {
+    chrome.tabs.getSelected(null, function(tab) {
+      if (tab.id === result['tabId']) {
+        loadSpinner();
+        setTimeout(hideSpinner, result['spinnerExpireDate'] - Date.now());
+      }
+    });
+  }
 });
+
+function saveTime(time) {
+  chrome.storage.sync.set({ spinnerExpireDate: time });
+}
+
+function saveTabId(tabId) {
+  chrome.storage.sync.set({ tabId });
+}
 
 function toggleNames(toggle) {
   if (toggle === 'on') {
@@ -41,6 +57,7 @@ function toggleLogs(toggle) {
 function loadSpinner() {
   document.getElementById('start-loader').style.display = 'block';
   document.getElementById('start-text').style.display = 'none';
+  state.loading = true;
 }
 
 function hideSpinner() {
@@ -102,9 +119,11 @@ document.addEventListener('DOMContentLoaded', function() {
             ssURL: state.ssURL,
           });
           chrome.tabs.connect(tab.id, { name: 'Hide Spinner Channel'});
+          saveTabId(tab.id);
           chrome.runtime.onMessage.addListener(function(message) {
             if (message === 'hideSpinner') hideSpinner();
-          })
+            if (!isNaN(parseInt(message))) saveTime(parseInt(message)); 
+          });
         });
       });
     });
