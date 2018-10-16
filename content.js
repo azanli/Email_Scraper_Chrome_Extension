@@ -31,12 +31,8 @@
           const value = tmp.innerHTML;
           
           if (value.length <= 30 && value.includes('.')) {
-            let indexAt = -1;
-            if (email) {
-              indexAt = value.indexOf(email);
-            } else {
-              indexAt = value.indexOf('@');
-            }
+            
+            indexAt = value.indexOf('@');
             if (indexAt > -1) {
               let parsedValue = value;
               while (parsedValue.includes('nbsp')) {
@@ -49,6 +45,7 @@
                 } else {
                   parsedValue = parsedValue.replace('nbsp', ' ');                  
                 }
+                indexAt = parsedValue.indexAt('@');
               }
               const name = parsedValue.substr(0, indexAt);
               const alphaMap = {};
