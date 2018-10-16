@@ -215,8 +215,9 @@
         // };
     
         const xhr = new XMLHttpRequest();
+        // const proxyurl = "https://cors-anywhere.herokuapp.com/";
         const url = this.scriptURL;
-        xhr.open('POST', url);
+        xhr.open('POST', url, true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         // xhr.onreadystatechange = () => {
           // if (this.log) console.log(xhr.status, xhr.statusText);
