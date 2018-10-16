@@ -106,7 +106,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       state.ssURL = ssURL;
     }
-    alert(ssURL)
     chrome.tabs.getSelected(null, function(tab) {
       chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
         chrome.tabs.executeScript(tab.id, {
