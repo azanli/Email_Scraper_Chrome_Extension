@@ -8,6 +8,21 @@
   width: 30em;
 }
 
+.footer {
+  align-self: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: .5em 1em;
+}
+
+.footer-text {
+  color: #4285F4;
+  font-size: 1em;
+  margin-left: 1em;
+  text-decoration: none;
+}
+
 #logs-on {
   background-color: #4285F4;
 }
@@ -39,7 +54,7 @@
   display: flex;
   height: 4em;
   justify-content: center;
-  margin: 1em 0;
+  margin-top: 1em;
   outline: none;
   width: 95%;
 }
