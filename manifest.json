@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Email Scraper for Mail Merge",
   "description": "Extract names and emails from webpages for mass email marketing using Google Spreadsheets with Mail Merge",
-  "version": "1",
+  "version": "0.0.0.1",
   "author": "Andy Li",
   "browser_action": {
     "default_title": "Email Scraper Extension",
@@ -10,7 +10,7 @@
   },
   "background": {
     "scripts": ["background.js"],
-    "persistent": true
+    "persistent": false
   },
   "permissions": [
     "activeTab", 
