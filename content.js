@@ -176,7 +176,7 @@
           let firstName = '';
           let lastName = '';
           if (this.names) {
-            let name = this.sources[i]['name'];
+            let name = this.sources[this.currIndex]['name'];
             if (this.includesSpecialChars(name)) {
               name = this.replaceSpecialChars(name);
             }
@@ -195,7 +195,7 @@
               }
             }
           }
-          const email = this.sources[i]['email'];
+          const email = this.sources[this.currIndex]['email'];
           const emailName = email.substr(0, email.indexOf('@'));
           if (firstName === emailName) {
             firstName = '';
