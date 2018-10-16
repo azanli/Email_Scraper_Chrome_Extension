@@ -195,11 +195,16 @@
               }
             }
           }
+          const email = this.sources[i]['email'];
+          const emailName = email.substr(0, email.indexOf('@'));
+          if (firstName === emailName) {
+            firstName = '';
+          }
 
           const data = {
             'First Name': firstName,
             'Last Name': lastName,
-            'Email Address': this.sources[i]['email'],
+            'Email Address': email,
             'Spreadsheet URL': this.spreadsheetURL,
           }
           this.currIndex++;
