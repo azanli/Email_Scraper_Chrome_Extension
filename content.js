@@ -38,14 +38,26 @@
               indexAt = value.indexOf('@');
             }
             if (indexAt > -1) {
-              const name = value.substr(0, indexAt);
+              let parsedValue = value;
+              while (parsedValue.includes('nbsp')) {
+                if (parsedValue.includes('&nbsp;')) {
+                  parsedValue = parsedValue.replace('&nbsp;', ' ');
+                } else if (parsedValue.includes('&nbsp')) {
+                  parsedValue = parsedValue.replace('&nbsp', ' ');
+                } else if (parsedValue.includes('nbsp;')) {
+                  parsedValue = parsedValue.replace('nbsp;', ' ');
+                } else {
+                  parsedValue = parsedValue.replace('nbsp', ' ');                  
+                }
+              }
+              const name = parsedValue.substr(0, indexAt);
               const alphaMap = {};
               for (let i = 0; i < indexAt; i++) {
-                alphaMap[value[i]] = true;
+                alphaMap[parsedValue[i]] = true;
               }
               this.sources[this.sourceIndex] = {
                 name,
-                email: value,
+                email: parsedValue,
                 score: 0,
                 alphaMap,
               }
