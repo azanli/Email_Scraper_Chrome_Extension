@@ -160,59 +160,53 @@
           if (this.log) console.log('Names & Emails:', this.sources);
           if (this.spreadsheetURL && this.sourceIndex > 0) {
             this.submitDataToSpreadsheet();
+            chrome.runtime.sendMessage(`${Date.now() + (2000 * (this.sourceIndex - 1))}`);
           }
         }
         return;
       };
     
       submitDataToSpreadsheet() {
-        let throttle = 0;
-        for (let i = 0; i < this.sourceIndex; i += 1) {
-          try {
-            // if (this.currIndex >= this.sourceIndex) return;
-
-            let firstName = '';
-            let lastName = '';
-            if (this.names) {
-              let name = this.sources[i]['name'];
-              if (this.includesSpecialChars(name)) {
-                name = this.replaceSpecialChars(name);
-              }
-              if (name.charCodeAt(0) >= 97 && name.charCodeAt(0) <= 122) {
-                name = this.fixLowerCaseName(name);
-              }
-              firstName = name;
-              const lastNameIndex = name.indexOf(' ');
-              if (lastNameIndex > 0) {
-                firstName = name.substr(0, lastNameIndex);
-                const middleNameIndex = name.lastIndexOf(' ');
-                if (lastNameIndex === middleNameIndex) {
-                  lastName = name.substr(lastNameIndex + 1);
-                } else {
-                  lastName = name.substr(middleNameIndex + 1);
-                }
-              }
-            }
-
-            const data = {
-              'First Name': firstName,
-              'Last Name': lastName,
-              'Email Address': this.sources[i]['email'],
-              'Spreadsheet URL': this.spreadsheetURL,
-            }
-            setTimeout(() => {
-              this.handleSpreadsheetSubmit(data);
-            }, throttle += 2000);
-            // this.currIndex++;
-            // this.handleSpreadsheetSubmit(data);
-          } catch(e) {
-            console.error(`Error submitting data to spreadsheet: ${e}`)
-          }
-          setTimeout(() => {
+        try {
+          if (this.currIndex >= this.sourceIndex) {
             chrome.runtime.sendMessage('hideSpinner');
-          }, 2000 * (this.sourceIndex - 1));
+            return;
+          }
+
+          let firstName = '';
+          let lastName = '';
+          if (this.names) {
+            let name = this.sources[i]['name'];
+            if (this.includesSpecialChars(name)) {
+              name = this.replaceSpecialChars(name);
+            }
+            if (name.charCodeAt(0) >= 97 && name.charCodeAt(0) <= 122) {
+              name = this.fixLowerCaseName(name);
+            }
+            firstName = name;
+            const lastNameIndex = name.indexOf(' ');
+            if (lastNameIndex > 0) {
+              firstName = name.substr(0, lastNameIndex);
+              const middleNameIndex = name.lastIndexOf(' ');
+              if (lastNameIndex === middleNameIndex) {
+                lastName = name.substr(lastNameIndex + 1);
+              } else {
+                lastName = name.substr(middleNameIndex + 1);
+              }
+            }
+          }
+
+          const data = {
+            'First Name': firstName,
+            'Last Name': lastName,
+            'Email Address': this.sources[i]['email'],
+            'Spreadsheet URL': this.spreadsheetURL,
+          }
+          this.currIndex++;
+          this.handleSpreadsheetSubmit(data);
+        } catch(e) {
+          console.error(`Error submitting data to spreadsheet: ${e}`)
         }
-        chrome.runtime.sendMessage(`${Date.now() + (2000 * (this.sourceIndex - 1))}`);
       };
     
       handleSpreadsheetSubmit(data = {}) {
@@ -228,12 +222,9 @@
         const url = this.scriptURL;
         xhr.open('POST', url, true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        // xhr.onreadystatechange = () => {
-          // if (this.log) console.log(xhr.status, xhr.statusText);
-          // if (this.log) console.log(xhr.responseText);
-          // this.submitDataToSpreadsheet();
-          // return;
-        // };
+        xhr.onload = () => {
+          this.submitDataToSpreadsheet();
+        }
         const encoded = Object.keys(data).map(function(k) {
           return encodeURIComponent(k) + "=" + encodeURIComponent(data[k]);
         }).join('&');
@@ -241,11 +232,11 @@
       }; 
     
       includesSpecialChars(str) {
-        return /[^A-Za-z\s]/g.test(str);
+        return /[^A-Za-z\s-]/g.test(str);
       }
     
       replaceSpecialChars(str) {
-        return str.replace(/[^A-Za-z\s]/g, ' ');
+        return str.replace(/[^A-Za-z\s-]/g, ' ');
       }
     
       fixLowerCaseName(str) {
