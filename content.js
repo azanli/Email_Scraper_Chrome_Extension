@@ -32,7 +32,7 @@
           
           if (value.length <= 30 && value.includes('.')) {
             
-            indexAt = value.indexOf('@');
+            let indexAt = value.indexOf('@');
             if (indexAt > -1) {
               let parsedValue = value;
               while (parsedValue.includes('nbsp')) {
@@ -45,7 +45,7 @@
                 } else {
                   parsedValue = parsedValue.replace('nbsp', ' ');                  
                 }
-                indexAt = parsedValue.indexAt('@');
+                indexAt = parsedValue.indexOf('@');
               }
               const name = parsedValue.substr(0, indexAt);
               const alphaMap = {};
