@@ -2,6 +2,19 @@
 <html>
   <head>
     <title>Email Scraper</title>
+
+    <!-- Google Analytics -->
+    <script text="text/javascript" src="./background.js"></script>
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-127582009-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-127582009-1');
+    </script>
+
     <link rel="stylesheet" type="text/css" href="./styles.css">
   </head>
   <body id="body">
@@ -43,5 +56,4 @@
     </div>
 
   </body>
-  <script type="text/javascript" src="./background.js"></script>
 </html>
